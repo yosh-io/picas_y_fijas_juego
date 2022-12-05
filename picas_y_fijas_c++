@@ -1,0 +1,72 @@
+#include<iostream>
+#include<cmath>
+#include<cstdlib>
+using namespace std;
+
+int main() {
+	int auxiliar;
+	int b;
+	int bandera;
+	int cont;
+	int fijas;
+	int num;
+	int numus[4];
+	int op;
+	int picas;
+	int posicion;
+	int vector[4];
+	op = 6;
+	//generando y verificando los 4 digitos
+	for (posicion=1;posicion<=4;posicion++) {
+		bandera = 0;
+		auxiliar = (rand()%(5*2))+1;
+		for (b=1;b<=4;b++) {
+			if (auxiliar==vector[b-1]) {
+				bandera = 1;
+			}
+		}
+		if (bandera==1) {
+			posicion = posicion-1;
+		} else {
+			vector[posicion-1] = auxiliar;
+		}
+	}
+	for (posicion=1;posicion<=4;posicion++) {
+		cout << vector[posicion-1] << endl;
+	}
+	do {
+		do {
+			cout << "Digite su numero debe ser de 4 cifras y no contener repetidos, sus oprtunidades para ganar o perder son: " << op << endl;
+			cin >> num;
+			fijas = 0;
+			picas = 0;
+			//se toma el residuo de cada numero para poder almacenarlo en el vector
+			numus[0] = int(num/1000);
+			numus[1] = int((num%1000)/100);
+			numus[2] = int(((num%1000)%100)/10);
+			numus[3] = int((num%1000)%100)%10;
+			//valida si el numero no se repite y si es mayor a 3 digitos
+		} while (!(numus[0]!=numus[1] && numus[0]!=numus[2] && numus[0]!=numus[3] && numus[1]!=numus[2] && numus[1]!=numus[3] && numus[2]!=numus[3] && num>1000 && num<9999));
+		for (cont=1;cont<=4;cont++) {
+			for (posicion=1;posicion<=4;posicion++) {
+				//verifica las picas y fijas
+				if (numus[cont-1]==vector[posicion-1]) {
+					if (cont==posicion) {
+						fijas = fijas+1;
+					} else {
+						picas = picas+1;
+					}
+				}
+			}
+		}
+		cout << "Ahora mismo Tienes:" << fijas << " fijas y " << picas << " picas" << endl;
+		op = op-1;
+	} while (!(op==0 || fijas==4));
+	if (fijas==4) {
+		cout << "Has sido nuestro ganador:D" << endl;
+	} else {
+		cout << "Has perdido el Juego):" << endl;
+	}
+	return 0;
+}
+
